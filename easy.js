@@ -1,6 +1,3 @@
-//https://performancejs.com/post/hde6d32/The-Best-Frontend-JavaScript-Interview-Questions-%28written-by-a-Frontend-Engineer%29
-//Working through these coding questions
-
 const assert = require('assert');
 
 //https://en.wikipedia.org/wiki/Primality_test#Pseudocode
@@ -22,7 +19,6 @@ function isPrime(num) {
   }
   return true;
 }
-
 function testPrime() {
   assert.equal(isPrime(0), false);
   assert.equal(isPrime(1), false);
@@ -37,7 +33,6 @@ function factorial(num) {
     return num * factorial(num - 1);
   }
 }
-
 function testFactorial() {
   assert.equal(factorial(0), 1);
   assert.equal(factorial(1), 1);
@@ -56,7 +51,6 @@ function fib(num) {
     return fib(num - 1) + fib(num - 2);
   }
 }
-
 function testFib() {
   assert.equal(fib(0), 0);
   assert.equal(fib(1), 1);
@@ -74,7 +68,6 @@ function isSorted(arr) {
   }
   return true;
 }
-
 function testSorted() {
   assert.equal(isSorted([]), true);
   assert.equal(isSorted([-Infinity, -5, 0, 3, 9]), true);
@@ -91,13 +84,82 @@ function filter(arr, test) {
   }
   return retArr;
 }
-
 function testFilter() {
   assert.deepEqual(filter([1, 2, 3, 4], n => n < 3), [1, 2]);
   assert.deepEqual(filter([0, 1, 2, 3, 4, 5], isPrime), [2, 3, 5]);
 }
 
-function reduce(arr, func) {
-  const retArr = [];
-
+function reduce(arr, func, val) {
+  if(arr.length < 2) {
+    return func(arr[0], val);
+  }
+  return func(reduce(arr.slice(1), func, arr.shift()), val);
 }
+function testReduce() {
+  assert.equal(reduce([1, 2, 3, 4], (a, b) => a + b, 0), 10);
+}
+
+function reverse(str) {
+  if(str.length < 2) {
+    return str;
+  }
+  const last = str.slice(str.length - 1, str.length);
+  const rest = str.slice(0, str.length - 1);
+  return last + reverse(rest);
+}
+function testReverse() {
+  assert.equal(reverse(''), '');
+  assert.equal(reverse('abcdef'), 'fedcba');
+}
+
+function indexOf(arr, val) {
+  for(let i = 0; i < arr.length; i++) {
+    //Not deep equals
+    if(val === arr[i]) {
+      return i;
+    }
+  }
+  return -1;
+}
+function testIndexOf() {
+  assert.equal(indexOf([1, 2, 3], 1), 0);
+  assert.equal(indexOf([1, 2, 3], 4), -1);
+}
+
+function isPalindrome(str) {
+  if(str.length <= 1) {
+    return true;
+  }
+  str = str.toLowerCase().replace(/\s/g, '');
+  const first = str[0];
+  const last = str[str.length - 1];
+  if(first != last) {
+    return false;
+  }
+  const rest = str.slice(1, str.length - 1);
+  return isPalindrome(rest);
+}
+function testPalindrome() {
+  assert.equal(isPalindrome(''), true);
+  assert.equal(isPalindrome('abcdcba'), true);
+  assert.equal(isPalindrome('abcd'), false);
+  assert.equal(isPalindrome('A man a plan a canal Panama'), true);
+}
+
+/*
+ * WIP
+function missing(arr) {
+  let retVal = undefined;
+  let largest = Number.NEGATIVE_INFINITY;
+  for(let i = 0; i < arr.length; i++) {
+    if(arr[i] > largest) {
+      largest = arr[i];
+    }
+  }
+  return retVal;
+}
+console.log(missing([0, 1, 2, 3]));
+function testMissing() {
+}
+//testMissing();
+*/
