@@ -163,3 +163,24 @@ function testMissing() {
 }
 //testMissing();
 */
+
+function isBalanced(str) {
+  const stack = [];
+  for(ltr of str) {
+    if(ltr == '{') { stack.push(ltr); }
+    if(ltr == '}') {
+      if(stack.pop() == undefined) { return false; }
+    }
+  }
+  return stack.length == 0;
+}
+
+function testIsBalanced() {
+  assert.equal(isBalanced('}{'), false);
+  assert.equal(isBalanced('{{}'), false);
+  //The website says this should be false, but it seems balanced to me...
+  //assert.equal(isBalanced('{}{}'), false);
+  assert.equal(isBalanced('foo { bar { baz } boo }'), true);
+  assert.equal(isBalanced('foo { bar { baz }'), false);
+  assert.equal(isBalanced('foo { bar } }'), false);
+}
