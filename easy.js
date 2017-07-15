@@ -146,23 +146,32 @@ function testPalindrome() {
   assert.equal(isPalindrome('A man a plan a canal Panama'), true);
 }
 
-/*
- * WIP
+//This is an ugly solution :/
 function missing(arr) {
   let retVal = undefined;
   let largest = Number.NEGATIVE_INFINITY;
+  let counter = {};
   for(let i = 0; i < arr.length; i++) {
-    if(arr[i] > largest) {
-      largest = arr[i];
+    if(counter[i + 1] === undefined) { counter[i + 1] = false; }
+    counter[arr[i]] = true;
+    if(arr[i] > largest) { largest = arr[i]; }
+  }
+  //We've found a number out of range
+  if(largest > arr.length) {
+    for(key in counter) {
+      if(!counter[key]) { retVal = key; }
     }
   }
   return retVal;
 }
-console.log(missing([0, 1, 2, 3]));
 function testMissing() {
+  assert.equal(missing([]), undefined);
+  assert.equal(missing([1, 4, 3]), 2);
+  assert.equal(missing([2, 3, 4]), 1);
+  assert.equal(missing([5, 1, 4, 2]), 3);
+  assert.equal(missing([1, 2, 3, 4]), undefined);
 }
-//testMissing();
-*/
+testMissing();
 
 function isBalanced(str) {
   const stack = [];
@@ -174,7 +183,6 @@ function isBalanced(str) {
   }
   return stack.length == 0;
 }
-
 function testIsBalanced() {
   assert.equal(isBalanced('}{'), false);
   assert.equal(isBalanced('{{}'), false);
