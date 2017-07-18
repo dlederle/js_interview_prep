@@ -1,11 +1,16 @@
 const assert = require('assert');
 
-//TODO: Skipping right now
 function permute(str) {
+  const results = [];
+  for(ltr of str) {
+   
+  }
+  return results;
 }
+console.log(permute('abc'));
 function testPermute() {
   assert.deepEqual(permute(''), []);
-  assert.deepEqual(permute('abc'), ['abc', 'acb', 'bca', 'cab', 'cba']);
+  assert.deepEqual(permute('abc'), ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']);
 }
 
 function debounce(func, pause) {
